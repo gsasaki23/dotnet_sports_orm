@@ -1,0 +1,175 @@
+@{
+    ViewData["Title"] = "Level 2";
+}
+
+<div class="well">
+    <p>Using the SportsORM, complete all the following queries and show their results on Level2.cshtml.</p>
+    <ol>
+        <li>...all teams in the Atlantic Soccer Conference</li>
+        <li>...all (current) players on the Boston Penguins</li>
+        <li>...all teams in the International Collegiate Baseball Conference</li>
+        <li>...all teams in the American Conference of Amateur Football</li>
+        <li>...all football teams</li>
+        <li>...all teams with a (current) player named "Sophia"</li>
+        <li>...everyone with the last name "Flores" who DOESN'T (currently) play for the Raptors (hint: think about ways you can filter data on the cshtml side)</li>
+        <li>...all current players with the Manitoba Tiger-Cats</li>
+        <li>...all teams that have had 12 or more players</li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <h3>#1: All Teams in "Atlantic Soccer Conference"</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Team Location</th>
+                <th>Team Name</th>
+            </tr>
+            @foreach(var t in ViewBag.Level2One)
+            {
+                <tr>
+                    <td>@t.Location</td>
+                    <td>@t.TeamName</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <h3>#2: All Current Players on "Boston Penguins"</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+            </tr>
+            @foreach(var p in ViewBag.Level2Two)
+            {
+                <tr>
+                    <td>@p.FirstName @p.LastName</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h3>#3: All Teams in "International Collegiate Baseball Conference"</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Team Location</th>
+                <th>Team Name</th>
+            </tr>
+            @foreach(var t in ViewBag.Level2Three)
+            {
+                <tr>
+                    <td>@t.Location</td>
+                    <td>@t.TeamName</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <h3>#4: All Teams in the "American Conference of Amateur Football"</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Team Location</th>
+                <th>Team Name</th>
+            </tr>
+            @foreach(var t in ViewBag.Level2Four)
+            {
+                <tr>
+                    <td>@t.Location</td>
+                    <td>@t.TeamName</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h3>#5: All Football teams</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Team Name</th>
+                <th>League</th>
+            </tr>
+            @foreach(var t in ViewBag.Level2Five)
+            {
+                <tr>
+                    <td>@t.Location @t.TeamName</td>
+                    <td>@t.CurrLeague.Name</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <h3>#6: All Teams with a (current) player named "Sophia"</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Team Name</th>
+                <th>League</th>
+            </tr>
+            @foreach(var t in ViewBag.Level2Six)
+            {
+                <tr>
+                    <td>@t.Location @t.TeamName</td>
+                    <td>@t.CurrLeague.Name</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h3>#7: All Players with LastName "Flores"</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>League</th>
+            </tr>
+            @foreach(var p in ViewBag.Level2Seven)
+            {
+                @* Alternatively, could have done a 2nd .Where in controller and remove the if statement*@
+                if (@p.CurrentTeam.TeamName != "Raptors")
+                {
+                    <tr>
+                        <td>@p.FirstName @p.LastName</td>
+                        <td>@p.CurrentTeam.Location @p.CurrentTeam.TeamName</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <h3>#8: All current players with the "Manitoba Tiger-Cats"</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Team Name</th>
+            </tr>
+            @foreach(var p in ViewBag.Level2Eight)
+            {
+                <tr>
+                    <td>@p.FirstName @p.LastName</td>
+                    <td>@p.CurrentTeam.Location @p.CurrentTeam.TeamName</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="row">
+    <h3>#9: All Teams with 12+ Players All Time</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>League</th>
+            <th>Team Name</th>
+            <th># Players All Time</th>
+        </tr>
+        @foreach(var t in ViewBag.Level2Nine)
+        {
+            <tr>
+                <td>@t.CurrLeague.Name</td>
+                <td>@t.Location @t.TeamName</td>
+                <td>@t.AllPlayers.Count</td>
+            </tr>
+        }
+    </table>
+</div>
