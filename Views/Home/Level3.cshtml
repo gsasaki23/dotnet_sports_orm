@@ -108,35 +108,30 @@
             <th>Team Name</th>
             <th>Player Name</th>
         </tr>
-        @foreach(var p in ViewBag.Level3Five)
+        @foreach(var player in ViewBag.Level3Five)
         {
-            @foreach (var t in p.AllTeams)
-            {
-                <tr>
-                    <td>@t.TeamOfPlayer.Location @t.TeamOfPlayer.TeamName</td>
-                    <td>@p.FirstName @p.LastName</td>
-                </tr>
-            }
+            <tr>
+                <td>@player.CurrentTeam.Location @player.CurrentTeam.TeamName</td>
+                <td>@player.FirstName @player.LastName</td>
+            </tr>
         }
-        @* @foreach(var p in ViewBag.Level3FiveCurr)
+    </table>
+</div>
+<div class="row">
+    <h3>#6 All players sorted by the number of teams they've played for</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Player Name</th>
+            <th>Team Count</th>
+            <th>Current Team</th>
+        </tr>
+        @foreach(var player in ViewBag.Level3Six)
         {
-            @foreach (var t in p.AllTeams)
-            {
-                <tr>
-                    <td>@t.TeamOfPlayer.Location @t.TeamOfPlayer.TeamName</td>
-                    <td>@t.TeamOfPlayer.Location @t.TeamOfPlayer.TeamName</td>
-                </tr>
-            }
+            <tr>
+                <td>@player.FirstName @player.LastName</td>
+                <td>@player.AllTeams.Count</td>
+                <td>@player.CurrentTeam.Location @player.CurrentTeam.TeamName </td>
+            </tr>
         }
-        @foreach(var p in ViewBag.Level3FivePast)
-        {
-            @foreach (var t in p.AllTeams)
-            {
-                <tr>
-                    <td>@t.TeamOfPlayer.Location @t.TeamOfPlayer.TeamName</td>
-                    <td>@t.TeamOfPlayer.Location @t.TeamOfPlayer.TeamName</td>
-                </tr>
-            }
-        } *@
     </table>
 </div>

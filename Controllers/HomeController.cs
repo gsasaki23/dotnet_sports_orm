@@ -182,11 +182,22 @@ namespace SportsORM.Controllers
             
             // #5 Everyone named "Levi" who has ever played in the Atlantic Federation of Amateur Baseball Players
             ViewBag.Level3Five = context.Players
-                .Include(player => player.AllTeams)
-                .ThenInclude(pt => pt.TeamOfPlayer)
-                .Where(p => p.FirstName == "Levi");
+                .Include(p => p.CurrentTeam)
+                .ThenInclude(ct => ct.CurrLeague)
+                .Include(p => p.AllTeams)
+                .ThenInclude(at => at.TeamOfPlayer)
+                .ThenInclude(tp => tp.CurrLeague)
+                // Name is Levi AND (they have at least one team with league name match OR their current team league name matches)
+                .Where(p => p.FirstName == "Levi" && (
+                    p.AllTeams.Where(at => at.TeamOfPlayer.CurrLeague.Name == "Atlantic Federation of Amateur Baseball Players").Count() > 0
+                    || 
+                    p.CurrentTeam.CurrLeague.Name == "Atlantic Federation of Amateur Baseball Players"
+                ));
 
-
+            ViewBag.Level3Six = context.Players
+                .Include(p => p.AllTeams)
+                .Include(p => p.CurrentTeam)
+                .OrderByDescending(p => p.AllTeams.Count());
 
             return View();
         }
